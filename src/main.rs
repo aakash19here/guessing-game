@@ -1,15 +1,19 @@
 // use std::io;
 use rand::Rng;
 use std::cmp::Ordering;
+use std::io::{self, Write};
 
 fn main() {
     println!("Guessing the number !!!");
     let secret_number = rand::thread_rng().gen_range(1..=100);
+    let mut count = 0;
 
     println!("The secret number is: {secret_number}");
 
     loop {
-        println!("Please input your guess:");
+        count += 1;
+        print!("Please input your guess: ");
+        io::stdout().flush().unwrap();
 
         let mut guess = String::new();
 
@@ -38,6 +42,11 @@ fn main() {
                 println!("BINGOOOOO!");
                 break;
             }
+        }
+
+        if count == 5 {
+            println!("You lose");
+            break;
         }
     }
 }
